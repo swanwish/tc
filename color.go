@@ -70,3 +70,22 @@ func Text(text string, codes ...int) string {
 	}
 	return fmt.Sprintf("%s%sm%s%s", StartSequence, strings.Join(colorCodes, ";"), text, EndSequence)
 }
+
+type ColorTextTemplate struct {
+	colorCodes string
+}
+
+func NewColorTextTemplate(codes ...int) ColorTextTemplate {
+	var colorCodes []string
+	for _, code := range codes {
+		colorCodes = append(colorCodes, fmt.Sprintf("%d", code))
+	}
+	return ColorTextTemplate{colorCodes: strings.Join(colorCodes, ";")}
+}
+
+func (t ColorTextTemplate) Text(text string) string {
+	if t.colorCodes == "" {
+		return text
+	}
+	return fmt.Sprintf("%s%sm%s%s", StartSequence, t.colorCodes, text, EndSequence)
+}
