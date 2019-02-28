@@ -1,11 +1,16 @@
 package tc
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 const (
-	StartSequence = "\033["
-	EndSequence   = "\033[0m"
+	StartSequence = "\x1b["
+	EndSequence   = "\x1b[0m"
 )
+
+const Reset = 0
 
 const (
 	TextColorBlack        = 30
@@ -27,13 +32,13 @@ const (
 )
 
 const (
-	TextStyleNoEffect    = 0
-	TextStyleNoBold      = 1
-	TextStyleNoDim       = 2
-	TextStyleNoUnderline = 4
-	TextStyleNoBlink     = 5
-	TextStyleNoInverse   = 7
-	TextStyleNoHidden    = 8
+	TextStyleNoEffect  = 0
+	TextStyleBold      = 1
+	TextStyleDim       = 2
+	TextStyleUnderline = 4
+	TextStyleBlink     = 5
+	TextStyleInverse   = 7
+	TextStyleHidden    = 8
 )
 
 const (
@@ -55,10 +60,13 @@ const (
 	BackgroundColorWhite        = 107
 )
 
-func ColorText(text string, textColor int) string {
-	return fmt.Sprintf("%s%dm%s%s", StartSequence, textColor, text, EndSequence)
-}
-
-func ColorTextEx(text string, textColor, textStyle, backgroundColor int) string {
-	return fmt.Sprintf("%s%d;%d;%dm%s%s", StartSequence, textColor, textStyle, backgroundColor, text, EndSequence)
+func Text(text string, codes ...int) string {
+	var colorCodes []string
+	for _, code := range codes {
+		colorCodes = append(colorCodes, fmt.Sprintf("%d", code))
+	}
+	if len(colorCodes) == 0 {
+		return text
+	}
+	return fmt.Sprintf("%s%sm%s%s", StartSequence, strings.Join(colorCodes, ";"), text, EndSequence)
 }

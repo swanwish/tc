@@ -5,6 +5,7 @@ import (
 	"testing"
 )
 
-func TestColorText(t *testing.T) {
-	fmt.Printf("%s\n", ColorText("Red", TextColorRed))
+func TestText(t *testing.T) {
+	fmt.Printf("%s\n", Text("Red", TextColorRed))
+	fmt.Printf("%s\n", Text("Red", TextColorRed, TextStyleBold))
 }
