@@ -10,7 +10,8 @@ func TestText(t *testing.T) {
 	fmt.Printf("%s\n", Text("Red", TextColorRed, TextStyleBold))
 }
 
-func TestNewColorTextTemplate(t *testing.T) {
-	redBoldText := NewColorTextTemplate(TextColorRed, TextStyleBold)
+func TestNewColorTemplate(t *testing.T) {
+	redBoldText := NewColorTemplate(TextColorRed, TextStyleBold)
 	fmt.Printf("%s\n", redBoldText.Text("Hello world"))
+	fmt.Printf("%s\n", redBoldText.Text(100))
 }
